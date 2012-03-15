@@ -1,0 +1,15 @@
+Source: mosburn-destkop
+Section: utils
+Priority: extra
+Maintainer: Michael Osburn <michael@michaelosburn.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Homepage: http://michaelosburn.com/projects/mosburn-desktop
+#Vcs-Git: git://git.debian.org/collab-maint/mosburn-destkop.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/mosburn-destkop.git;a=summary
+
+Package: mosburn-destkop
+Architecture: any
+Depends: awesome, xterm, emacs, texlive-full, keychain, git-core, subversion, screen, ssh-askpass-gnome, system-config-lvm, auctex,  awesome, dkms, conky, mpd, ncmpc, mpc, gmpc, gnuplot, gnuplot-x11, gnuplot-mode, plotdrop, qgfe
+Description: My desktop metapackage
+ <insert long description, indented with spaces>

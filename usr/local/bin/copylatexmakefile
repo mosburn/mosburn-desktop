@@ -1,0 +1,22 @@
+#!/bin/ksh
+
+TEMPLATES=/home/dodsfall/Templates
+
+print "What type of document is this?"
+print "1.) article"
+print "2.) book"
+print "3.) letter"
+
+read doctype
+
+print "What is the name of this document?"
+read name
+case $doctype in
+    1)  cp $TEMPLATES/article ./$name.tex;;
+    2)  cp $TEMPLATES/book ./$name.tex;;
+    3)  cp $TEMPLATES/letter ./$name.tex;;
+    *)  print "Doing it the hard way I see...";;
+esac
+
+print "SOURCE = "$name > Makefile
+cat $TEMPLATES/Makefile >> Makefile

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+xterm -bg black -fg white&
+sleep 1; xterm -bg black -fg white &
+sleep 1; xterm -bg black -fg white &
+sleep 1; xterm -bg black -fg white &
+sleep 1; xterm -bg black -fg white &
+sleep 1; xterm -bg black -fg white &
+sleep 1; xterm -bg black -fg white &
+sleep 1; xterm -bg black -fg white &
+sleep 1; xterm -bg black -fg white &

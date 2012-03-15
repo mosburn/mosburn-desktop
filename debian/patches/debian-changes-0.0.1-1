@@ -1,0 +1,234 @@
+Description: Upstream changes introduced in version 0.0.1-1
+ This patch has been created by dpkg-source during the package build.
+ Here's the last changelog entry, hopefully it gives details on why
+ those changes were made:
+ .
+ mosburn-destkop (0.0.1-1) unstable; urgency=low
+ .
+   * Initial release
+   * testing the build system
+ .
+ The person named in the Author field signed this changelog entry.
+Author: Michael Osburn <michael@michaelosburn.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- /dev/null
++++ mosburn-destkop-0.0.1/usr/local/bin/google-earth-fix-fonts.sh
+@@ -0,0 +1,3 @@
++#!/bin/bash
++
++sudo apt-get install ttf-mscorefonts-installer lsb-core
+--- /dev/null
++++ mosburn-destkop-0.0.1/usr/local/bin/copylatexmakefile
+@@ -0,0 +1,22 @@
++#!/bin/ksh
++
++TEMPLATES=/home/dodsfall/Templates
++
++print "What type of document is this?"
++print "1.) article"
++print "2.) book"
++print "3.) letter"
++
++read doctype
++
++print "What is the name of this document?"
++read name
++case $doctype in
++    1)  cp $TEMPLATES/article ./$name.tex;;
++    2)  cp $TEMPLATES/book ./$name.tex;;
++    3)  cp $TEMPLATES/letter ./$name.tex;;
++    *)  print "Doing it the hard way I see...";;
++esac
++
++print "SOURCE = "$name > Makefile
++cat $TEMPLATES/Makefile >> Makefile
+--- /dev/null
++++ mosburn-destkop-0.0.1/usr/local/bin/findempty
+@@ -0,0 +1,48 @@
++#!/bin/bash
++#=================================================================
++#
++#    Filename: findempty
++#
++#    Created:   5-April-2010
++#
++#    Author:    Michael Osburn <michael @ michaelosburn.com>
++#
++#               Copyleft 2010 -- Michael Osburn
++#                        Some Rights Reserved
++#
++#    Built on:  Gentoo
++#
++#    Tested on: OpenBSD 4.8-5.0, Red Hat Enterprise 4-6, Debian Lenny-Wheezy 
++#
++#   Requires:  OS: Bash
++#               APIs: 
++#
++#    Purpose:  This script finds empty directories and prints them to the screen
++#            
++#            
++#
++#   Assumptions/ 
++#    Limitations:
++#
++#    Executing:
++#
++#    Exit Codes:
++#
++#
++#    Version:  
++#
++#    Revision history:
++#
++#      
++#
++#=================================================================
++
++OUTFILE=/tmp/list_for_review
++
++echo "Searching for empty directories:"
++echo "This list is avaible at $OUTFILE"
++find -depth -type d -empty |tee $OUTFILE
++
++echo "There are `cat $OUTFILE | wc -l` empty Directories"
++echo "You can remove them with this command"
++echo "find -depth -type d -empty -exec rmdir {} \;"
+--- /dev/null
++++ mosburn-destkop-0.0.1/usr/local/bin/install-ubuntu-dev-apps-dpkg-base
+@@ -0,0 +1,43 @@
++#!/bin/bash
++#=================================================================
++#
++# Filename: install-ubuntu-dev-apps-dpkg-base
++#
++# Created: 16-March-2012
++#
++# Author: Michael Osburn <michael @ michaelosburn.com> <mosburn>
++#
++# Copyleft 2012 -- Michael Osburn
++# Some Rights Reserved
++#
++# Built on: Ubuntu
++#
++# Tested on: Ubuntu 11.10 
++#
++# Requires: OS: Bash
++# APIs:
++#
++# Purpose: This script installs the basic packages used to create devian/ubuntu
++# 	   packages with some version control tools. 
++#
++#
++# Assumptions/
++# Limitations:
++#
++# Executing:
++#
++# Exit Codes:
++#
++#
++# Version:	1.0.0
++#
++# Revision history:
++#
++#	1.0.0 16-March-2012 Initial Release <mosburn>
++#
++#=================================================================
++
++
++sudo apt-get install build-essential devscripts ubuntu-dev-tools debhelper dh-make diff patch cdbs quilt gnupg fakeroot lintian  pbuilder piuparts git-core git-gui git-doc svn bzr 
++
++# Create working directories and any other post install setup here
+\ No newline at end of file
+--- /dev/null
++++ mosburn-destkop-0.0.1/usr/local/bin/fnk.sh
+@@ -0,0 +1,29 @@
++#!/bin/bash
++# 
++# This is a simple Find and Kill script that saves me time when tweaking 
++# configuration files for processess that daemonize upon launch
++# and for hunting down those pesky rogue processes
++#
++#
++# Script History
++# 02/28/2008 Version 1, Michael Osburn, Initial write
++#
++
++var=$1
++
++# Let's make sure that the script was called with an argument
++if [ -z "$var" ]
++then
++    echo "Example usage:"
++    echo "fnk.sh conky"
++    echo "This will kill all processes with 'conky' in its name"
++    exit
++fi
++
++# On to the actual command
++# 
++# The >/dev/null 2>$1 part is used to reduce output as grep will find itself
++# searching for the process, but it will be dead before the kill command
++# processes
++
++ps aux | grep $var | kill -9  `awk '{ print $2 }'` >/dev/null 2>$1
+--- /dev/null
++++ mosburn-destkop-0.0.1/usr/local/bin/ubuntu-install.sh
+@@ -0,0 +1,6 @@
++#!/bin/bash
++
++sudo apt-get update
++sudo apt-get dist-upgrade
++
++sudo apt-get install keychain emacs texlive-full git-core subversion  ubuntu-restricted-addons ubuntu-restricted-extras screen ssh-askpass-gnome system-config-lvm auctex  awesome
+--- /dev/null
++++ mosburn-destkop-0.0.1/usr/local/bin/killsvn.sh
+@@ -0,0 +1,21 @@
++#!/bin/bash
++# 
++# This script goes through the current directory and removes all instances of 
++# .svn/ that is in place. This tool was writen with the purpose of easing 
++# intergration of several subversion repositories into smaller ones and to 
++# save some space in large directories, making it easier to do monthly archives
++# to removable media. 
++#
++# Script History
++# 02/29/2008 Version 1, Michael Osburn, Initial write
++#
++
++echo "I will remove the following files and directories"
++find . -iname .svn* 
++echo "Continue? y/n"
++read -e CONTINUE
++
++if [ $CONTINUE = "y" ]
++then
++    find . -iname .svn* | rm  -fr `awk '{ print $1 }'`
++fi
+--- /dev/null
++++ mosburn-destkop-0.0.1/usr/local/bin/xterms
+@@ -0,0 +1,11 @@
++#!/bin/bash
++
++xterm -bg black -fg white&
++sleep 1; xterm -bg black -fg white &
++sleep 1; xterm -bg black -fg white &
++sleep 1; xterm -bg black -fg white &
++sleep 1; xterm -bg black -fg white &
++sleep 1; xterm -bg black -fg white &
++sleep 1; xterm -bg black -fg white &
++sleep 1; xterm -bg black -fg white &
++sleep 1; xterm -bg black -fg white &
