@@ -4,7 +4,9 @@ services:
   - docker
 
 script:
-  - wget -O- http://travis.debian.net/script.sh 
+  - apt-get install build-essential fakeroot devscripts
+  - ls
+  - debuild -b -uc -us
 
 branches:
   except:
