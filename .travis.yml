@@ -1,13 +1,13 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 script:
-  - sudo apt-get install build-essential fakeroot devscripts debhelper
-  - debuild -b -uc -us
-  - ls 
-
+- sudo apt-get install build-essential fakeroot devscripts debhelper
+- debuild -b -uc -us
+- ls
 branches:
   except:
-    - /^debian\/\d/
+  - "/^debian\\/\\d/"
+before_install:
+- openssl aes-256-cbc -K $encrypted_ba0d838ea032_key -iv $encrypted_ba0d838ea032_iv
+  -in travis.ssh.enc -out ~\/travis.ssh -d
