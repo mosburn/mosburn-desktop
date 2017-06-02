@@ -6,7 +6,7 @@ services:
 script:
   - sudo apt-get install build-essential fakeroot devscripts debhelper
   - debuild -b -uc -us
-  - ls *.deb
+  - ls 
 
 branches:
   except:
