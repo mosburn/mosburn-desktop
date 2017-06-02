@@ -4,7 +4,7 @@ services:
   - docker
 
 script:
-  - apt-get install build-essential fakeroot devscripts
+  - sudo apt-get install build-essential fakeroot devscripts
   - ls
   - debuild -b -uc -us
 
